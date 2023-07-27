@@ -6,6 +6,8 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 const bot = new Telegraf(process.env.WAGMI_TELEGRAM_BOT_TOKEN);
+app.use(bot.webhookCallback("/secret-path"));
+bot.telegram.setWebhook("https://wagmi-telegram-bot.onrender.com/secret-path");
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -31,8 +33,8 @@ bot.command("ethereum", (ctx) => {
     });
 });
 
-bot.launch();
+// bot.launch();
 
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});
