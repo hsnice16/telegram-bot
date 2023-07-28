@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { Telegraf } = require("telegraf");
-const fetch = require("node-fetch");
+const axios = require("axios");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
@@ -21,17 +21,15 @@ bot.command("start", (ctx) => {
   );
 });
 
-bot.command("ethereum", (ctx) => {
-  fetch(
+bot.command("ethereum", async (ctx) => {
+  const { data } = await axios.get(
     `https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Hello, today the ethereum price is ${data.ethereum.usd}USD`
-      );
-    });
+  );
+
+  bot.telegram.sendMessage(
+    ctx.chat.id,
+    `Hello, today the ethereum price is ${data.ethereum.usd}USD`
+  );
 });
 
 // bot.launch();
