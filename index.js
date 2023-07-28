@@ -28,7 +28,11 @@ bot.command("joke", async (ctx) => {
 
   bot.telegram.sendMessage(
     ctx.chat.id,
-    `**${data.setup}**\n\n${data.punchline.replaceAll(".", "\\.")}`,
+    `**${data.setup}**\n\n${
+      typeof data.punchline === "string"
+        ? data.punchline.replaceAll(".", "\\.")
+        : data.punchline
+    }`,
     { parse_mode: "MarkdownV2" }
   );
 });
