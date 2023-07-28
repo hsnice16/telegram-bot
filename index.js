@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 bot.command("start", (ctx) => {
   bot.telegram.sendMessage(
     ctx.chat.id,
-    "Hello there! Welcome to the WAGMI telegram bot. \nI respond to /joke. Please try it."
+    "Hello there! Welcome to the Joke telegram bot. \nI respond to /joke. Please try it."
   );
 });
 
@@ -28,12 +28,8 @@ bot.command("joke", async (ctx) => {
 
   bot.telegram.sendMessage(
     ctx.chat.id,
-    `**${data.setup}**\n\n${
-      typeof data.punchline === "string"
-        ? data.punchline.replaceAll(".", "\\.")
-        : data.punchline
-    }`,
-    { parse_mode: "MarkdownV2" }
+    `<strong>${data.setup}</strong>${data.punchline}`,
+    { parse_mode: "HTML" }
   );
 });
 
