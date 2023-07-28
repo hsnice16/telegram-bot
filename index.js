@@ -1,5 +1,7 @@
 require("dotenv").config();
 const { Telegraf } = require("telegraf");
+const extra = require("telegraf/extra");
+const markup = extra.markdown();
 const axios = require("axios");
 const express = require("express");
 const app = express();
@@ -17,18 +19,19 @@ app.get("/", (req, res) => {
 bot.command("start", (ctx) => {
   bot.telegram.sendMessage(
     ctx.chat.id,
-    "Hello there! Welcome to the WAGMI telegram bot. \nI respond to /ethereum. Please try it."
+    "Hello there! Welcome to the WAGMI telegram bot. \nI respond to /joke. Please try it."
   );
 });
 
-bot.command("ethereum", async (ctx) => {
+bot.command("joke", async (ctx) => {
   const { data } = await axios.get(
-    `https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`
+    `https://official-joke-api.appspot.com/jokes/random`
   );
 
   bot.telegram.sendMessage(
     ctx.chat.id,
-    `Hello, today the ethereum price is ${data.ethereum.usd}USD`
+    `**${data.setup}**\n\n${data.punchline}`,
+    markup
   );
 });
 
