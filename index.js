@@ -1,7 +1,5 @@
 require("dotenv").config();
 const { Telegraf } = require("telegraf");
-const extra = require("telegraf/extra");
-const markup = extra.markdown();
 const axios = require("axios");
 const express = require("express");
 const app = express();
@@ -30,8 +28,8 @@ bot.command("joke", async (ctx) => {
 
   bot.telegram.sendMessage(
     ctx.chat.id,
-    `**${data.setup}**\n\n${data.punchline}`,
-    markup
+    `**${data.setup}**\n\n${data.punchline.replaceAll(".", "\\.")}`,
+    { parse_mode: "MarkdownV2" }
   );
 });
 
